@@ -1,0 +1,133 @@
+basePath: /api-SERVICE_NAME
+definitions:
+  handlers.RespondJson:
+    properties:
+      intent:
+        example: bbrn:::SERVICE_NAME:::/upload
+        type: string
+      message: {}
+      status:
+        example: true
+        type: boolean
+    type: object
+info:
+  contact: {}
+  description: 'bb.app.SERVICE_NAME : microservice for layout.'
+  title: BB SERVICE_NAME Service API
+  version: 1.0.0
+paths:
+  /todos:
+    get:
+      consumes:
+      - application/json
+      description: get todos by pagination
+      parameters:
+      - in: query
+        maximum: 50
+        minimum: 1
+        name: limit
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get todos by pagination success
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "400":
+          description: 'invalid pagination query: page,limit'
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "404":
+          description: todos not found
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+      security:
+      - BearerAuth: []
+      summary: get todos by pagination
+      tags:
+      - Todos
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: upload file
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - '*/*'
+      responses:
+        "200":
+          description: uploaded file name
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+      summary: upload file
+      tags:
+      - Upload
+  /uploads/{filename}:
+    get:
+      consumes:
+      - '*/*'
+      description: retrieve uploaded file by filename
+      parameters:
+      - description: filename
+        in: path
+        name: filename
+        required: true
+        type: string
+      produces:
+      - '*/*'
+      responses:
+        "200":
+          description: file content
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+      summary: retrieve uploaded file by filename
+      tags:
+      - Upload
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
