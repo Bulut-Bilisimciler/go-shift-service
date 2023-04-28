@@ -5,8 +5,8 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: shiftuser
+      POSTGRES_PASSWORD: shiftdb
       POSTGRES_DB: shiftdb
     ports:
       - "5432:5432"
