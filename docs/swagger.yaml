@@ -1,4 +1,4 @@
-basePath: /api-SERVICE_NAME
+basePath: /api-shifts
 definitions:
   handlers.RespondJson:
     properties:
@@ -12,8 +12,8 @@ definitions:
     type: object
 info:
   contact: {}
-  description: 'bb.app.SERVICE_NAME : microservice for layout.'
-  title: BB SERVICE_NAME Service API
+  description: 'tt.app.ShiftService : microservice for layout.'
+  title: ShiftService API
   version: 1.0.0
 paths:
   /todos:
