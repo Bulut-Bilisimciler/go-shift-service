@@ -14,12 +14,12 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// Path: SERVICE_NAME
-// @Title BB SERVICE_NAME Service API
-// @Description bb.app.SERVICE_NAME : microservice for layout.
+// Path: ShiftService
+// @Title ShiftService API
+// @Description tt.app.ShiftService : microservice for layout.
 // @Version 1.0.0
 // @Schemes http https
-// @BasePath /api-SERVICE_NAME
+// @BasePath /api-shifts
 
 // @securityDefinitions.apikey BearerAuth
 // @in header
@@ -62,7 +62,7 @@ func main() {
 	db := NewPostgresDB(config.C.DB.Url)
 
 	// create application service
-	mysvc := handlers.NewMySuperService(
+	mysvc := handlers.NewShiftService(
 		inAppCache,
 		cacheConn,
 		cacheContext,

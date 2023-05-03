@@ -10,12 +10,12 @@ import (
 )
 
 const (
-	API_PREFIX = "/api-SERVICE_NAME"
-	RN_PREFIX  = "bbrn:::SERVICENAME:::"
+	API_PREFIX = "/api-shifts"
+	RN_PREFIX  = "bbrn:::shiftservice:::"
 )
 
-// MySuperService is a struct for auth core
-type MySuperService struct {
+// MyShiftService is a struct for auth core
+type ShiftService struct {
 	inAppCache   *persistence.InMemoryStore
 	cache        *redis.Client
 	cacheContext context.Context
@@ -23,14 +23,14 @@ type MySuperService struct {
 	// s3sess       *session.Session
 }
 
-func NewMySuperService(
+func NewShiftService(
 	inAppCache *persistence.InMemoryStore,
 	cache *redis.Client,
 	cacheContext context.Context,
 	db *gorm.DB,
 	// s3sess *session.Session,
-) *MySuperService {
-	return &MySuperService{
+) *ShiftService {
+	return &ShiftService{
 		inAppCache:   inAppCache,
 		cache:        cache,
 		cacheContext: cacheContext,
@@ -60,20 +60,15 @@ func respondJson(ctx *gin.Context, code int, intent string, message interface{},
 	}
 }
 
-func (mss *MySuperService) InitRouter(r *gin.Engine) {
+func (mss *ShiftService) InitRouter(r *gin.Engine) {
 	// -- my service routes (group)
 	v1 := r.Group(API_PREFIX)
 
-	// --- File upload templates
-
-	// get uploaded file
-	v1.GET("/uploads/:filename", mss.HandleRetrieveFile)
-	// upload file (one per request)
-	v1.POST("/upload", func(ctx *gin.Context) {
-		code, data, err := mss.HandleUploadFile(ctx)
-		respondJson(ctx, code, RN_PREFIX+"/upload", data, err)
+	// SHIFT SECTİON
+	// create shift
+	v1.POST("/shifts", func(ctx *gin.Context) {
+		code, data, err := mss.HandleCreateShift(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/comments", data, err)
 	})
-
-	// --- CRUD Templates
 
 }

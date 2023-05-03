@@ -22,7 +22,7 @@ import (
 // @Failure 404 {object} handlers.RespondJson "todos not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /todos [get]
-func (mss *MySuperService) HandleGetTodos(c *gin.Context) (int, interface{}, error) {
+func (mss *ShiftService) HandleGetTodos(c *gin.Context) (int, interface{}, error) {
 	// pagination from req.query
 	var params models.Pagination
 	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {

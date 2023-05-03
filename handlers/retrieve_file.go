@@ -19,7 +19,7 @@ import (
 // @Failure 403 {object} handlers.RespondJson "Forbidden"
 // @Failure 500 {object} handlers.RespondJson "Internal Server Error"
 // @Router /uploads/{filename} [get]
-func (mss *MySuperService) HandleRetrieveFile(c *gin.Context) {
+func (mss *ShiftService) HandleRetrieveFile(c *gin.Context) {
 	// get :filename from url param
 	filename := c.Param("filename")
 	log.Println(filename)

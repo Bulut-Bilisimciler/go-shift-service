@@ -20,7 +20,7 @@ import (
 // @Failure 403 {object} handlers.RespondJson "Forbidden"
 // @Failure 500 {object} handlers.RespondJson "Internal Server Error"
 // @Router /upload [post]
-func (mss *MySuperService) HandleUploadFile(c *gin.Context) (int, interface{}, error) {
+func (mss *ShiftService) HandleUploadFile(c *gin.Context) (int, interface{}, error) {
 	// read file from request
 	fileHeader, _ := c.FormFile("file")
 	file, err := fileHeader.Open()
