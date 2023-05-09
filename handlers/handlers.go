@@ -68,7 +68,12 @@ func (mss *ShiftService) InitRouter(r *gin.Engine) {
 	// create shift
 	v1.POST("/shifts", func(ctx *gin.Context) {
 		code, data, err := mss.HandleCreateShift(ctx)
-		respondJson(ctx, code, RN_PREFIX+"/comments", data, err)
+		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
+	})
+
+	v1.GET("/shifts", func(ctx *gin.Context) {
+		code, data, err := mss.HandleGetShift(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
 
 }
