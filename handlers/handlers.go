@@ -76,4 +76,14 @@ func (mss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
 
+	v1.PUT("/shifts", func(ctx *gin.Context) {
+		code, data, err := mss.HandleUpdateShift(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
+	})
+
+	v1.DELETE("/shifts", func(ctx *gin.Context) {
+		code, data, err := mss.HandleDeleteShift(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
+	})
+
 }
