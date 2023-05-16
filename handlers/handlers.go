@@ -73,7 +73,7 @@ func (mss *ShiftService) InitRouter(r *gin.Engine) {
 
 	v1.GET("/shifts", func(ctx *gin.Context) {
 		code, data, err := mss.HandleGetShift(ctx)
-		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
+		respondJson(ctx, code, API_PREFIX+"/shifts", data, err)
 	})
 
 	v1.PUT("/shifts", func(ctx *gin.Context) {
@@ -86,4 +86,8 @@ func (mss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
 
+	v1.GET("/users", func(ctx *gin.Context) {
+		code, data, err := mss.HandleGetUsers(ctx)
+		respondJson(ctx, code, API_PREFIX+"/users", data, err)
+	})
 }

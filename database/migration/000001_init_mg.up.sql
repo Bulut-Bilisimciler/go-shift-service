@@ -7,7 +7,7 @@ CREATE TABLE users (
                        nickname VARCHAR(50) NOT NULL UNIQUE,
                        creation_date TIMESTAMP DEFAULT NOW(),
                        update_date TIMESTAMP DEFAULT NOW(),
-                       made_fiel VARCHAR(50) NOT NULL
+                       made_field VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE shifts (
@@ -44,3 +44,8 @@ CREATE TABLE demands (
                          creation_date TIMESTAMP DEFAULT NOW(),
                          update_date TIMESTAMP DEFAULT NOW()
 );
+
+
+INSERT INTO users (user_id, name, surname, email, nickname, made_field)
+VALUES ('user1', 'John', 'Doe', 'john.doe@example.com', 'johndoe', 'Some Field Value'),
+       ('user2', 'Jane', 'Smith', 'jane.smith@example.com', 'janesmith', 'Another Field Value');

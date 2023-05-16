@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/database/migration/000001_init_mg.down.sql" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/database/migration/000001_init_mg.up.sql" dialect="PostgreSQL" />
-  </component>
-</project>
