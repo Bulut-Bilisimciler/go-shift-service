@@ -1,51 +1,46 @@
 CREATE TABLE users (
-                       id SERIAL PRIMARY KEY,
-                       user_id VARCHAR(50) NOT NULL UNIQUE,
-                       name VARCHAR(50) NOT NULL,
-                       surname VARCHAR(50) NOT NULL,
-                       email VARCHAR(100) NOT NULL UNIQUE,
-                       nickname VARCHAR(50) NOT NULL UNIQUE,
-                       creation_date TIMESTAMP DEFAULT NOW(),
-                       update_date TIMESTAMP DEFAULT NOW(),
-                       made_field VARCHAR(50) NOT NULL
+                     id uuid PRIMARY KEY,
+                     name VARCHAR(64) NOT NULL,
+                     surname VARCHAR(64) NOT NULL,
+                     email VARCHAR(255) DEFAULT NULL,
+                     made_field VARCHAR(255) DEFAULT NULL,
+                     nickname VARCHAR(64) NOT NULL,
+                     user_id INT NOT NULL,
+                     created_at TIMESTAMPTZ DEFAULT NOW(),
+                     updated_at TIMESTAMPTZ DEFAULT NOW(),
+                     is_active BOOLEAN DEFAULT true
 );
-
 CREATE TABLE shifts (
-                        id SERIAL PRIMARY KEY,
-                        shift_id VARCHAR(50) NOT NULL UNIQUE,
-                        user_id VARCHAR(50) NOT NULL REFERENCES users(user_id),
-                        start_time TIMESTAMP NOT NULL,
-                        end_time TIMESTAMP NOT NULL,
-                        status VARCHAR(50) NOT NULL,
-                        creation_date TIMESTAMP DEFAULT NOW(),
-                        update_date TIMESTAMP DEFAULT NOW(),
-                        user_id_to_keep_shift VARCHAR(50) NOT NULL,
-                        made_fiel VARCHAR(50) NOT NULL,
-                        is_active BOOLEAN DEFAULT true
+                      id uuid PRIMARY KEY,
+                      shift_id VARCHAR(16) NOT NULL,
+                      user_id uuid DEFAULT NULL,
+                      start_time TIMESTAMPTZ NOT NULL,
+                      end_time TIMESTAMPTZ NOT NULL,
+                      created_at TIMESTAMPTZ DEFAULT NOW(),
+                      updated_at TIMESTAMPTZ DEFAULT NOW(),
+                      made_field VARCHAR(255) DEFAULT NULL,
+                      is_active BOOLEAN DEFAULT true
 );
-
 CREATE TABLE shift_periods (
-                               id SERIAL PRIMARY KEY,
-                               shift_periods_id VARCHAR(50) NOT NULL UNIQUE,
-                               start_date TIMESTAMP NOT NULL,
-                               end_date TIMESTAMP NOT NULL,
-                               creation_date TIMESTAMP DEFAULT NOW(),
-                               update_date TIMESTAMP DEFAULT NOW(),
-                               is_active BOOLEAN DEFAULT true
+                             id uuid PRIMARY KEY,
+                             shift_periods_id VARCHAR(16) NOT NULL,
+                             start_time TIMESTAMPTZ NOT NULL,
+                             end_time TIMESTAMPTZ NOT NULL,
+                             created_at TIMESTAMPTZ DEFAULT NOW(),
+                             updated_at TIMESTAMPTZ DEFAULT NOW(),
+                             is_active BOOLEAN DEFAULT true
 );
-
 CREATE TABLE demands (
-                         id SERIAL PRIMARY KEY,
-                         demand_id VARCHAR(50) NOT NULL UNIQUE,
-                         user_id VARCHAR(50) NOT NULL REFERENCES users(user_id),
-                         old_shift_id VARCHAR(50) NOT NULL REFERENCES shifts(shift_id),
-                         new_shift_id VARCHAR(50) NOT NULL REFERENCES shifts(shift_id),
-                         status VARCHAR(50) NOT NULL,
-                         creation_date TIMESTAMP DEFAULT NOW(),
-                         update_date TIMESTAMP DEFAULT NOW()
+                       id uuid PRIMARY KEY,
+                       demand_id VARCHAR(64) NOT NULL,
+                       user_id VARCHAR(64) NOT NULL,
+                       old_shift_id VARCHAR(64) NOT NULL,
+                       new_shift_id  VARCHAR(255) NOT NULL,
+                       created_at TIMESTAMPTZ DEFAULT NOW(),
+                       updated_at TIMESTAMPTZ DEFAULT NOW(),
+                       is_active BOOLEAN DEFAULT true
 );
 
+select * from users
 
-INSERT INTO users (user_id, name, surname, email, nickname, made_field)
-VALUES ('user1', 'John', 'Doe', 'john.doe@example.com', 'johndoe', 'Some Field Value'),
-       ('user2', 'Jane', 'Smith', 'jane.smith@example.com', 'janesmith', 'Another Field Value');
+

@@ -12,6 +12,68 @@
     },
     "basePath": "/api-shifts",
     "paths": {
+        "/shifts": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get shifts by dto",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "shifts"
+                ],
+                "summary": "get shifts by dto",
+                "parameters": [
+                    {
+                        "maximum": 50,
+                        "minimum": 1,
+                        "type": "integer",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get shifts by success",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid pagination query",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "422": {
+                        "description": "shifts not found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    }
+                }
+            }
+        },
         "/todos": {
             "get": {
                 "security": [
@@ -167,6 +229,68 @@
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "get users by dto",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "get users by dto",
+                "parameters": [
+                    {
+                        "maximum": 50,
+                        "minimum": 1,
+                        "type": "integer",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "get shifts by success",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid pagination query",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "422": {
+                        "description": "shifts not found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.RespondJson"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
                         "schema": {
                             "$ref": "#/definitions/handlers.RespondJson"
                         }

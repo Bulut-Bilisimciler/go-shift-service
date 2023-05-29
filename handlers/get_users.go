@@ -6,6 +6,7 @@ import (
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // HandleGetShifts godoc
@@ -23,20 +24,18 @@ import (
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /users [get]
 func (ss *ShiftService) HandleGetUsers(c *gin.Context) (int, interface{}, error) {
-	var params models.Pagination
-	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid page or limit query for pagination")
-	}
-
-	limit := params.Limit
-	offset := (params.Page - 1) * params.Limit
 
 	// get users
-	var shifts []models.User
-	if err := ss.db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("created_at DESC").Find(&shifts).Error; !errors.Is(err, nil) {
-		return http.StatusNotFound, nil, errors.New("users not found")
+	var users []models.User
+	err := ss.db.Find(&users).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return http.StatusOK, users, errors.New("no users found")
+		}
+
+		return http.StatusInternalServerError, nil, err
 	}
 
-	return http.StatusOK, shifts, nil
+	return http.StatusOK, users, nil
 
 }

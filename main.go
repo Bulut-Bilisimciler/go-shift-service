@@ -27,9 +27,9 @@ import (
 
 const (
 	// server name
-	APP_NAME = "bb.app.SERVICE_NAME"
+	APP_NAME = "localhost:9097/api-shifts/"
 	// server description
-	APP_DESCRIPTION = "bb.app.SERVICE_NAME : microservice for layout."
+	APP_DESCRIPTION = "localhost:9097/api-shifts/ : microservice for layout."
 )
 
 func main() {
@@ -78,7 +78,7 @@ func main() {
 		gin.SetMode(gin.DebugMode)
 	}
 	router := gin.New()
-	router.Use(gin.Recovery())
+	router.Use(gin.RecoveryWithWriter(gin.DefaultErrorWriter))
 	mysvc.InitRouter(router)
 
 	// check env and set swagger
