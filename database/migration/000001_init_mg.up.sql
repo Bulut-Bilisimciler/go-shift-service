@@ -7,8 +7,7 @@ CREATE TABLE users (
                      nickname VARCHAR(64) NOT NULL,
                      user_id INT NOT NULL,
                      created_at TIMESTAMPTZ DEFAULT NOW(),
-                     updated_at TIMESTAMPTZ DEFAULT NOW(),
-                     is_active BOOLEAN DEFAULT true
+                     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE shifts (
                       id INT PRIMARY KEY,
@@ -18,8 +17,7 @@ CREATE TABLE shifts (
                       end_time TIMESTAMPTZ NOT NULL,
                       created_at TIMESTAMPTZ DEFAULT NOW(),
                       updated_at TIMESTAMPTZ DEFAULT NOW(),
-                      made_field VARCHAR(255) DEFAULT NULL,
-                      is_active BOOLEAN DEFAULT true
+                      made_field VARCHAR(255) DEFAULT NULL
 );
 CREATE TABLE shift_periods (
                              id INT PRIMARY KEY,
@@ -27,8 +25,7 @@ CREATE TABLE shift_periods (
                              start_time TIMESTAMPTZ NOT NULL,
                              end_time TIMESTAMPTZ NOT NULL,
                              created_at TIMESTAMPTZ DEFAULT NOW(),
-                             updated_at TIMESTAMPTZ DEFAULT NOW(),
-                             is_active BOOLEAN DEFAULT true
+                             updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE demands (
                        id INT PRIMARY KEY,
@@ -37,10 +34,14 @@ CREATE TABLE demands (
                        old_shift_id VARCHAR(64) NOT NULL,
                        new_shift_id  VARCHAR(255) NOT NULL,
                        created_at TIMESTAMPTZ DEFAULT NOW(),
-                       updated_at TIMESTAMPTZ DEFAULT NOW(),
-                       is_active BOOLEAN DEFAULT true
+                       updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-select * from users
+/* INSERT INTO public.users
+(id, "name", surname, email, made_field, nickname, user_id, created_at, updated_at)
+VALUES(4, 'asdasdasd', 'asdasdad', 'email', 'made_field', 'asdasd', 0, now(), now());
 
-
+INSERT INTO public.shifts
+(id, shift_id, user_id, start_time, end_time, created_at, updated_at, made_field)
+VALUES(1, 'qwerqwe', 1,  now(),  now(), now(), now(),  'qweqwe'); 
+*/
