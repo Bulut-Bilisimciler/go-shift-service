@@ -1,5 +1,5 @@
 CREATE TABLE users (
-                     id uuid PRIMARY KEY,
+                     id INT PRIMARY KEY,
                      name VARCHAR(64) NOT NULL,
                      surname VARCHAR(64) NOT NULL,
                      email VARCHAR(255) DEFAULT NULL,
@@ -11,9 +11,9 @@ CREATE TABLE users (
                      is_active BOOLEAN DEFAULT true
 );
 CREATE TABLE shifts (
-                      id uuid PRIMARY KEY,
+                      id INT PRIMARY KEY,
                       shift_id VARCHAR(16) NOT NULL,
-                      user_id uuid DEFAULT NULL,
+                      user_id INT DEFAULT NULL,
                       start_time TIMESTAMPTZ NOT NULL,
                       end_time TIMESTAMPTZ NOT NULL,
                       created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -22,7 +22,7 @@ CREATE TABLE shifts (
                       is_active BOOLEAN DEFAULT true
 );
 CREATE TABLE shift_periods (
-                             id uuid PRIMARY KEY,
+                             id INT PRIMARY KEY,
                              shift_periods_id VARCHAR(16) NOT NULL,
                              start_time TIMESTAMPTZ NOT NULL,
                              end_time TIMESTAMPTZ NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE shift_periods (
                              is_active BOOLEAN DEFAULT true
 );
 CREATE TABLE demands (
-                       id uuid PRIMARY KEY,
+                       id INT PRIMARY KEY,
                        demand_id VARCHAR(64) NOT NULL,
                        user_id VARCHAR(64) NOT NULL,
                        old_shift_id VARCHAR(64) NOT NULL,
