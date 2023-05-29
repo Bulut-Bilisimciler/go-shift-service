@@ -8,6 +8,7 @@ type Shift struct {
 	User      *User      `json:"-" gorm:"foreign_key"`
 	StartTime time.Time  `json:"start_time"`
 	EndTime   time.Time  `json:"end_time"`
+	isActive  int64      `json:"is_active"`
 	CreatedAt *time.Time `json:"created_at" gorm:"default:now()"`
 	UpdatedAt *time.Time `json:"updated_at" gorm:"default:now()"`
 	DeletedAt *time.Time `json:"deleted_at,omitempty" gorm:"default:null"`

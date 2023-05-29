@@ -1,11 +1,13 @@
 package handlers
 
 import (
-	"errors"
+	"database/sql"
+	"log"
 	"net/http"
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 // HandleGetShifts godoc
@@ -23,20 +25,49 @@ import (
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts [get]
 func (ss *ShiftService) HandleGetShift(c *gin.Context) (int, interface{}, error) {
-	var params models.Pagination
-	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid page or limit query for pagination")
-	}
-
-	limit := params.Limit
-	offset := (params.Page - 1) * params.Limit
 
 	// get shifts
-	var shifts []models.Shift
-	if err := ss.db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("created_at DESC").Find(&shifts).Error; !errors.Is(err, nil) {
-		return http.StatusNotFound, nil, errors.New("threads not found")
+	db, err := sql.Open("postgres", "postgres://shiftuser:shiftdb@localhost:5432/shiftdb?sslmode=disable")
+	if err != nil {
+		log.Print("err")
+		return http.StatusInternalServerError, nil, err
 	}
+	defer db.Close()
 
-	return http.StatusOK, shifts, nil
+	rows, err := db.Query("SELECT * FROM shifts")
+	if err != nil {
+		log.Print(err)
+		return http.StatusInternalServerError, nil, err
+	}
+	defer rows.Close()
+	var data []models.Shift
+	log.Print("err1")
+	for rows.Next() {
+		var shift models.Shift
+		err := rows.Scan(
+			&shift.ID,
+			&shift.ShiftID,
+			&shift.UserID,
+			&shift.StartTime,
+			&shift.EndTime,
+			&shift.CreatedAt,
+			&shift.UpdatedAt,
+			&shift.MadeField,
+		)
+		log.Print("err2")
+		if err != nil {
+			log.Print(err)
+			return http.StatusInternalServerError, nil, err
+		}
+		log.Print("err3")
+		data = append(data, shift) // shifti slice'a ekle
+	}
+	if err = rows.Err(); err != nil {
+		log.Print(err)
+		return http.StatusInternalServerError, nil, err
+	}
+	log.Print("err4")
+
+	return http.StatusOK, data, nil
 
 }

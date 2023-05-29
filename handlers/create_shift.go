@@ -37,8 +37,8 @@ func (ss *ShiftService) HandleCreateShift(c *gin.Context) (int, interface{}, err
 
 	// map req to model
 	var entity models.Shift
-	entity.Shift = params.Shift
-	entity.User.UserId = params.UserId
+	// entity.Shift = params.Shift
+	// entity.User.UserId = params.UserId
 
 	// Create shift
 	if err := ss.db.Create(&entity).Error; !errors.Is(err, nil) {
