@@ -16,6 +16,46 @@ info:
   title: ShiftService API
   version: 1.0.0
 paths:
+  /shifts:
+    get:
+      consumes:
+      - application/json
+      description: get shifts by dto
+      parameters:
+      - in: query
+        maximum: 50
+        minimum: 1
+        name: limit
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get shifts by success
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "400":
+          description: invalid pagination query
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "422":
+          description: shifts not found
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+      security:
+      - BearerAuth: []
+      summary: get shifts by dto
+      tags:
+      - shifts
   /todos:
     get:
       consumes:
@@ -122,6 +162,46 @@ paths:
       summary: retrieve uploaded file by filename
       tags:
       - Upload
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: get users by dto
+      parameters:
+      - in: query
+        maximum: 50
+        minimum: 1
+        name: limit
+        type: integer
+      - in: query
+        maximum: 100
+        minimum: 1
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get shifts by success
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "400":
+          description: invalid pagination query
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "422":
+          description: shifts not found
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/handlers.RespondJson'
+      security:
+      - BearerAuth: []
+      summary: get users by dto
+      tags:
+      - users
 schemes:
 - http
 - https
