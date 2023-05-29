@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: shiftuser
       POSTGRES_PASSWORD: shiftdb
-      POSTGRES_DB: shiftservicedb
+      POSTGRES_DB: shiftdb
     ports:
       - "5432:5432"
     volumes:
