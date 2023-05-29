@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"log"
 
 	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-gonic/gin"
@@ -89,5 +90,6 @@ func (mss *ShiftService) InitRouter(r *gin.Engine) {
 	v1.GET("/users", func(ctx *gin.Context) {
 		code, data, err := mss.HandleGetUsers(ctx)
 		respondJson(ctx, code, API_PREFIX+"/users", data, err)
+		log.Print(code, data, err)
 	})
 }
