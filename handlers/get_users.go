@@ -1,11 +1,13 @@
 package handlers
 
 import (
-	"errors"
+	"database/sql"
+	"log"
 	"net/http"
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 // HandleGetShifts godoc
@@ -23,20 +25,56 @@ import (
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /users [get]
 func (ss *ShiftService) HandleGetUsers(c *gin.Context) (int, interface{}, error) {
-	var params models.Pagination
-	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid page or limit query for pagination")
-	}
+	// var params models.Pagination
+	// if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
+	// 	return http.StatusBadRequest, nil, errors.New("invalid page or limit query for pagination")
+	// }
 
-	limit := params.Limit
-	offset := (params.Page - 1) * params.Limit
+	// limit := params.Limit
+	// offset := (params.Page - 1) * params.Limit
 
 	// get users
-	var shifts []models.User
-	if err := ss.db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("created_at DESC").Find(&shifts).Error; !errors.Is(err, nil) {
-		return http.StatusNotFound, nil, errors.New("users not found")
+	// var users []models.User
+	// if err := ss.db.Where("deleted_at is NULL").Order("created_at DESC").Find(&users).Error; !errors.Is(err, nil) {
+	// 	return http.StatusNotFound, nil, errors.New("users not found")
+	// }
+	db, err := sql.Open("postgres", "postgres://shiftuser:shiftdb@localhost:5432/shiftdb?sslmode=disable")
+	if err != nil {
+		log.Print("err")
+		return http.StatusInternalServerError, nil, err
 	}
+	defer db.Close()
 
-	return http.StatusOK, shifts, nil
+	rows, err := db.Query("SELECT * FROM users")
+	if err != nil {
+		log.Print(err)
+		return http.StatusInternalServerError, nil, err
+	}
+	defer rows.Close()
+	var data []models.User
 
+	for rows.Next() {
+		var user models.User
+		err := rows.Scan(
+			&user.Id,
+			&user.Name,
+			&user.Surname,
+			&user.Email,
+			&user.Made_Field,
+			&user.Nickname,
+			&user.UserId,
+			&user.Creation_Date,
+			&user.Update_Date,
+		)
+		if err != nil {
+			log.Print(err)
+			return http.StatusInternalServerError, nil, err
+		}
+		data = append(data, user) // Kullanıcıyı slice'a ekle
+	}
+	if err = rows.Err(); err != nil {
+		log.Print(err)
+		return http.StatusInternalServerError, nil, err
+	}
+	return http.StatusOK, data, nil
 }
