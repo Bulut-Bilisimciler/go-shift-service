@@ -23,27 +23,20 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /users [get]
-func (ss *ShiftService) HandleGetUsers(c *gin.Context) (int, interface{}, error) {
-	// pagination from req.query
-	var params models.Pagination
-	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid pagination query: page,limit")
-	}
+func (ss *ShiftService) HandleGetUserById(c *gin.Context) (int, interface{}, error) {
 
-	// get users
-	limit := params.Limit
-	offset := (params.Page - 1) * params.Limit
+	// Get user id from req.params
+	userId := c.Param("id")
 
-	var users []models.User
-	if err := ss.db.Limit(limit).Offset(offset).Find(&users).Error; !errors.Is(err, nil) {
+	// get user
+	var user models.User
+	if err := ss.db.Where("user_id = ?", userId).First(&user).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return http.StatusNotFound, nil, errors.New("users not found")
+			return http.StatusNotFound, nil, errors.New("user not found")
+		} else {
+			return http.StatusInternalServerError, nil, errors.New("user not found due to internal error")
 		}
-
-		return http.StatusInternalServerError, nil, errors.New("internal server error")
 	}
 
-	// return
-	return http.StatusOK, users, nil
-
+	return http.StatusOK, user, nil
 }
