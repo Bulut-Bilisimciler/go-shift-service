@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"log"
 
 	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-gonic/gin"
@@ -35,14 +34,15 @@ func NewShiftService(
 		inAppCache:   inAppCache,
 		cache:        cache,
 		cacheContext: cacheContext,
+		db:           db,
 		// s3sess:       s3sess,
 	}
 }
 
 type RespondJson struct {
-	Status  bool        `json:"status" example:"true"`
-	Intent  string      `json:"intent" example:"bbrn:::SERVICE_NAME:::/upload"`
-	Message interface{} `json:"message" example:nil`
+	Status  bool        `json:"status"`
+	Intent  string      `json:"intent"`
+	Message interface{} `json:"message"`
 }
 
 func respondJson(ctx *gin.Context, code int, intent string, message interface{}, err error) {
@@ -61,35 +61,44 @@ func respondJson(ctx *gin.Context, code int, intent string, message interface{},
 	}
 }
 
-func (mss *ShiftService) InitRouter(r *gin.Engine) {
+func (ss *ShiftService) InitRouter(r *gin.Engine) {
 	// -- my service routes (group)
 	v1 := r.Group(API_PREFIX)
 
-	// SHIFT SECTİON
-	// create shift
+	// Users
+	// Get all users
+	v1.GET("/users", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetUsers(ctx)
+		respondJson(ctx, code, API_PREFIX+"/users", data, err)
+	})
+
+	// Users by id
+	v1.GET("/users/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetUserById(ctx)
+		respondJson(ctx, code, API_PREFIX+"/users/:id", data, err)
+	})
+
+	// Create a new shift
 	v1.POST("/shifts", func(ctx *gin.Context) {
-		code, data, err := mss.HandleCreateShift(ctx)
+		code, data, err := ss.HandleCreateShift(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
 
+	// Get all shifts
 	v1.GET("/shifts", func(ctx *gin.Context) {
-		code, data, err := mss.HandleGetShift(ctx)
+		code, data, err := ss.HandleGetShift(ctx)
 		respondJson(ctx, code, API_PREFIX+"/shifts", data, err)
 	})
 
-	v1.PUT("/shifts", func(ctx *gin.Context) {
-		code, data, err := mss.HandleUpdateShift(ctx)
+	// Update a specific shift by id
+	v1.PUT("/shifts/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleUpdateShift(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
 
-	v1.DELETE("/shifts", func(ctx *gin.Context) {
-		code, data, err := mss.HandleDeleteShift(ctx)
+	// Delete a specific shift by id
+	v1.DELETE("/shifts/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleDeleteShift(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
-	})
-
-	v1.GET("/users", func(ctx *gin.Context) {
-		code, data, err := mss.HandleGetUsers(ctx)
-		respondJson(ctx, code, API_PREFIX+"/users", data, err)
-		log.Print(code, data, err)
 	})
 }

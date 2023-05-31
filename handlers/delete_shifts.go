@@ -6,6 +6,7 @@ import (
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // HandleGetShifts godoc
@@ -23,20 +24,20 @@ import (
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts [get]
 func (ss *ShiftService) HandleDeleteShift(c *gin.Context) (int, interface{}, error) {
-	var params models.Pagination
-	if err := c.ShouldBindQuery(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid page or limit query for pagination")
+
+	// pagination from req.query
+	shiftId := c.Param("id")
+
+	// delete shift
+	var shift models.Shift
+	if err := ss.db.Where("shift_id = ?", shiftId).Delete(&shift).Error; !errors.Is(err, nil) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return http.StatusNotFound, nil, errors.New("shift not found")
+		} else {
+			return http.StatusInternalServerError, nil, errors.New("shift not found due to internal error")
+		}
 	}
 
-	limit := params.Limit
-	offset := (params.Page - 1) * params.Limit
-
-	// get shifts
-	var shifts []models.Shift
-	if err := ss.db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("created_at DESC").Find(&shifts).Error; !errors.Is(err, nil) {
-		return http.StatusNotFound, nil, errors.New("threads not found")
-	}
-
-	return http.StatusOK, shifts, nil
+	return http.StatusOK, shift, nil
 
 }
