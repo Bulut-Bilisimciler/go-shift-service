@@ -3,7 +3,48 @@
 This service that allows users to manage their shift periods and create their shift lists. This service allows users to select which days and times they will be on duty in a given date range and create their shifts. In addition, users can view the shift roster for their shift period, and makeshift change requests, and have the option to delete or update existing shifts. Through notifications, users can be notified of updates related to their shift periods. The Shift Service provides a user-friendly platform that helps users to schedule shifts in an organized manner and manage their roster.
 
 ## Content
+
+- [Quick start](#quick-start)
 - [Project structure](#project-structure)
+
+## Quick start
+
+We can run this Go Shift service project with or without Docker. Here, I am providing both ways to run this project.
+
+- Clone this project
+
+```bash
+# Move to your workspace
+cd your-workspace
+
+# Clone this project into your workspace
+git clone https://github.com/Bulut-Bilisimciler/go-shift-service.git
+
+# Move to the project root directory
+cd go-shift-service
+```
+
+### Run without Docker
+
+Make sure PostgreSQL is running and accessible with the credentials you provided in the .env file.
+
+Open a terminal or command prompt and navigate to the root directory of your project.
+
+Run the following command to execute the Go program:
+
+- Create a file `.env` similar to `.env.example` at the root directory with your configuration.
+- Install `go` if not installed on your machine.
+- Install `PostgreSQL` if not installed on your machine.
+- Important: Open the `.env` file and modify the values of `DB_HOST`, `DB_USER`, and `DB_PASSWORD` to match your PostgreSQL configuration. Update any other configuration variables if necessary.
+- Run `go run main.go`.
+- Access API using `http://localhost:9097`
+
+### Run with Docker
+
+- Create a file `.env` similar to `.env.example` at the root directory with your configuration.
+- Install Docker and Docker Compose.
+- Run `docker-compose up -d`.
+- Access API using `http://localhost:9097`
 
 ## Project structure
 
@@ -47,41 +88,3 @@ It is important to note that the project structure described here may not includ
 > JWT Authentication Middleware for Access Token Validation.
 
 ![Private API Request Flow](https://github.com/amitshekhariitbhu/go-backend-clean-architecture/blob/main/assets/go-arch-private-api-request-flow.png?raw=true)
-
-### How to run this project?
-
-We can run this Go Backend Clean Architecture project with or without Docker. Here, I am providing both ways to run this project.
-
-- Clone this project
-
-```bash
-# Move to your workspace
-cd your-workspace
-
-# Clone this project into your workspace
-git clone https://github.com/Bulut-Bilisimciler/go-shift-service.git
-
-# Move to the project root directory
-cd go-shift-service
-```
-
-#### Run without Docker
-
-Make sure PostgreSQL is running and accessible with the credentials you provided in the .env file.
-
-Open a terminal or command prompt and navigate to the root directory of your project.
-
-Run the following command to execute the Go program:
-- Create a file `.env` similar to `.env.example` at the root directory with your configuration.
-- Install `go` if not installed on your machine.
-- Install `PostgreSQL` if not installed on your machine.
-- Important: Open the `.env` file and modify the values of `DB_HOST`, `DB_USER`, and `DB_PASSWORD` to match your PostgreSQL configuration. Update any other configuration variables if necessary.
-- Run `go run main.go`.
-- Access API using `http://localhost:9097`
-
-#### Run with Docker
-
-- Create a file `.env` similar to `.env.example` at the root directory with your configuration.
-- Install Docker and Docker Compose.
-- Run `docker-compose up -d`.
-- Access API using `http://localhost:9097`
