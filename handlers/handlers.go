@@ -78,6 +78,24 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, API_PREFIX+"/users/:id", data, err)
 	})
 
+	// Create a new user
+	// v1.POST("/users", func(ctx *gin.Context) {
+	// 	code, data, err := ss.HandleCreateUser(ctx)
+	// 	respondJson(ctx, code, RN_PREFIX+"/users", data, err)
+	// })
+
+	// Update a specific user by id
+	// v1.PUT("/users/:id", func(ctx *gin.Context) {
+	// 	code, data, err := ss.HandleUpdateUser(ctx)
+	// 	respondJson(ctx, code, RN_PREFIX+"/users", data, err)
+	// })
+
+	// Delete a specific user by id
+	v1.DELETE("/users/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleDeleteUser(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/users", data, err)
+	})
+
 	// Create a new shift
 	v1.POST("/shifts", func(ctx *gin.Context) {
 		code, data, err := ss.HandleCreateShift(ctx)

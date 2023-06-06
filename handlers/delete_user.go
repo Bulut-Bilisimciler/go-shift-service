@@ -23,32 +23,20 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts [get]
-func (ss *ShiftService) HandleUpdateShift(c *gin.Context) (int, interface{}, error) {
+func (ss *ShiftService) HandleDeleteUser(c *gin.Context) (int, interface{}, error) {
 
-	// get shift id
-	shiftID := c.Param("id")
+	// get user id
+	userID := c.Param("id")
 
-	// get dto from req.body
-	var dto models.Shift
-	if err := c.ShouldBindJSON(&dto); err != nil {
-		return http.StatusBadRequest, nil, errors.New("invalid shift dto")
-	}
-
-	// get shift from db
-	var shift models.Shift
-
-	// check shift exists
-	if err := ss.db.Where("id = ?", shiftID).First(&shift).Error; err != nil {
+	// get user from db
+	var user models.User
+	// delete user
+	if err := ss.db.Where("id = ?", userID).Delete(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return http.StatusUnprocessableEntity, nil, errors.New("shift not found")
+			return http.StatusNotFound, nil, errors.New("user not found")
 		}
 		return http.StatusInternalServerError, nil, errors.New("internal server error")
 	}
 
-	// update shift
-	if err := ss.db.Model(&shift).Updates(dto).Error; err != nil {
-		return http.StatusInternalServerError, nil, errors.New("internal server error")
-	}
-
-	return http.StatusOK, shift, nil
+	return http.StatusOK, user, nil
 }
