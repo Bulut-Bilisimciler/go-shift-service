@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"database/sql"
 	"errors"
 	"net/http"
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 // HandleGetShifts godoc
@@ -35,15 +35,12 @@ func (ss *ShiftService) HandleGetUsers(c *gin.Context) (int, interface{}, error)
 	offset := (params.Page - 1) * params.Limit
 
 	var users []models.User
-	if err := ss.db.Limit(limit).Offset(offset).Find(&users).Error; !errors.Is(err, nil) {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return http.StatusNotFound, nil, errors.New("users not found")
+	if err := ss.db.Limit(limit).Offset(offset).Find(&users).Error; err != nil {
+		if err == sql.ErrNoRows {
+			return http.StatusNotFound, nil, err
 		}
-
-		return http.StatusInternalServerError, nil, errors.New("internal server error")
+		return http.StatusInternalServerError, nil, err
 	}
-
 	// return
 	return http.StatusOK, users, nil
-
 }

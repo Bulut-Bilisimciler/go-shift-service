@@ -119,4 +119,10 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		code, data, err := ss.HandleDeleteShift(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
+
+	// Shift by id
+	v1.GET("/shifts/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetShiftById(ctx)
+		respondJson(ctx, code, API_PREFIX+"/shifts/:id", data, err)
+	})
 }
