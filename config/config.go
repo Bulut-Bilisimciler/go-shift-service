@@ -1,10 +1,10 @@
 package config
 
 import (
-	"fmt"
-	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/Bulut-Bilisimciler/go-shift-service/logger"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/viper"
@@ -54,12 +54,11 @@ func ReadConfig(processCwdir string) {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println(err)
-		log.Fatalln(err)
+		logger.ERROR.Println(err)
 	}
 
 	if err := viper.Unmarshal(&Config); err != nil {
-		fmt.Println(err)
+		logger.ERROR.Println(err)
 		os.Exit(1)
 	}
 
