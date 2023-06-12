@@ -9,20 +9,20 @@ import (
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleUpdateUser godoc
+// @Summary update users by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description update users by dto
+// @Tags users
 // @Accept json
 // @Produce json
 // @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
+// @Success 200 {object} handlers.RespondJson "update users by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
+// @Failure 422 {object} handlers.RespondJson "user not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
+// @Router /users/:id [put]
 func (ss *ShiftService) HandleUpdateUser(c *gin.Context) (int, interface{}, error) {
 
 	// get user id
