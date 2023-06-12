@@ -92,10 +92,10 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 	})
 
 	// Update a specific user by id
-	// v1.PUT("/users/:id", func(ctx *gin.Context) {
-	// 	code, data, err := ss.HandleUpdateUser(ctx)
-	// 	respondJson(ctx, code, RN_PREFIX+"/users", data, err)
-	// })
+	v1.PUT("/users/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleUpdateUser(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/users", data, err)
+	})
 
 	//DEMANDS
 
@@ -146,7 +146,6 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		code, data, err := ss.HandleUpdateShift(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/shifts", data, err)
 	})
-
 	// SHIFT_PERIODS
 
 	// Create a new shift period
@@ -165,6 +164,17 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 	v1.GET("/shift-periods/:id", func(ctx *gin.Context) {
 		code, data, err := ss.HandleGetShiftPeriodByID(ctx)
 		respondJson(ctx, code, API_PREFIX+"/shift-periods/:id", data, err)
+
+	})
+
+	v1.GET("/shift-periods", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetShiftPeriod(ctx)
+		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
+	})
+
+	v1.GET("/demands", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetDemand(ctx)
+		respondJson(ctx, code, API_PREFIX+"/demands", data, err)
 	})
 
 }

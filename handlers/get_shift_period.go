@@ -24,11 +24,11 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts [get]
-func (ss *ShiftService) HandleGetDemand(c *gin.Context) (int, interface{}, error) {
+func (ss *ShiftService) HandleGetShiftPeriod(c *gin.Context) (int, interface{}, error) {
 
-	// get demands
-	var demands []models.Demand
-	if err := ss.db.Find(&demands).Error; err != nil {
+	// get shift period
+	var shiftPeriod []models.ShiftPeriod
+	if err := ss.db.Find(&shiftPeriod).Error; err != nil {
 		if err == sql.ErrNoRows {
 			return http.StatusNotFound, nil, err
 		}
@@ -36,5 +36,5 @@ func (ss *ShiftService) HandleGetDemand(c *gin.Context) (int, interface{}, error
 		return http.StatusInternalServerError, nil, err
 	}
 
-	return http.StatusOK, demands, nil
+	return http.StatusOK, shiftPeriod, nil
 }
