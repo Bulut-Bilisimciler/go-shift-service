@@ -6,14 +6,15 @@ import (
 
 // Demand struct represents a demand for a specific shift
 type Demand struct {
-	ID        int64      `gorm:"primaryKey" json:"id"`
-	UserID    int64      `gorm:"column:user_id" json:"userId"`
-	ShiftID   int64      `gorm:"column:shift_id" json:"shiftId"`
-	StartDate time.Time  `gorm:"column:start_date" json:"startDate"`
-	EndDate   time.Time  `gorm:"column:end_date" json:"endDate"`
-	CreatedAt time.Time  `gorm:"column:created_at" json:"createdAt"`
-	UpdatedAt time.Time  `gorm:"column:updated_at" json:"updatedAt"`
-	DeletedAt *time.Time `gorm:"column:deleted_at" json:"-"`
+	ID        int64      `json:"id" gorm:"primary_key;autoIncrement"`
+	DemandID  int64      `json:"demand_id" gorm:"not null"`
+	ShiftID   string     `json:"shift_id" gorm:"not null"`
+	UserID    int64      `json:"user_id" gorm:"default:null"`
+	StartTime time.Time  `json:"start_time" gorm:"not null"`
+	EndTime   time.Time  `json:"end_time" gorm:"not null"`
+	CreatedAt time.Time  `json:"created_at" gorm:"default:now()"`
+	UpdatedAt time.Time  `json:"updated_at" gorm:"default:now()"`
+	DeletedAt *time.Time `json:"deleted_at" gorm:"default:null"`
 }
 
 // TableName returns the table name for the Demand model

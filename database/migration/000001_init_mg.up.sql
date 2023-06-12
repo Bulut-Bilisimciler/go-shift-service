@@ -28,14 +28,18 @@ CREATE TABLE shift_periods (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE demands (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  demand_id VARCHAR(64) NOT NULL,
-  user_id VARCHAR(64) NOT NULL,
-  old_shift_id VARCHAR(64) NOT NULL,
-  new_shift_id  VARCHAR(255) NOT NULL,
+  id SERIAL PRIMARY KEY,
+  demand_id BIGINT NOT NULL,
+  shift_id VARCHAR(255) NOT NULL,
+  user_id BIGINT DEFAULT NULL,
+  start_time TIMESTAMPTZ NOT NULL,
+  end_time TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at TIMESTAMPTZ DEFAULT NULL
 );
+
+
 
 /* INSERT INTO public.users
 (id, "name", surname, email, made_field, nickname, user_id, created_at, updated_at)
