@@ -3,16 +3,18 @@ package handlers
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
 )
 
 type createShiftDto struct {
-	UserName string `form:"username" json:"user_name" binding:"omitempty"`
-	UserId   int64  `form:"user_id,default=1" json:"user_id" binding:"omitempty,min=1,max=64"`
-	Shift    string `form:"shift" json:"shift"`
-	Status   int    `form:"status,default=1" json:"status,omitempty" binding:"omitempty,min=1,max=3"`
+	ShiftID   string    `json:"shift_id" gorm:"not null"`
+	UserID    int64     `json:"user_id" gorm:"default:null"`
+	StartTime time.Time `json:"start_time" gorm:"not null"`
+	EndTime   time.Time `json:"end_time" gorm:"not null"`
+	MadeField string    `json:"made_field" gorm:"default:null"`
 }
 
 // HandleCreateShift godoc
@@ -30,20 +32,19 @@ type createShiftDto struct {
 // @Router /shifts [post]
 
 func (ss *ShiftService) HandleCreateShift(c *gin.Context) (int, interface{}, error) {
-	var params createShiftDto
-	if err := c.ShouldBindJSON(&params); !errors.Is(err, nil) {
-		return http.StatusBadRequest, nil, errors.New("invalid create shift dto")
+	// Parse the request body to get the shift data
+	var shift models.Shift
+	if err := c.ShouldBindJSON(&shift); err != nil {
+
+		return http.StatusBadRequest, nil, errors.New("invalid shift data")
 	}
 
-	// map req to model
-	var entity models.Shift
-	// entity.Shift = params.Shift
-	// entity.User.UserId = params.UserId
+	// Perform any validation or preprocessing of the shift data if needed
 
-	// Create shift
-	if err := ss.db.Create(&entity).Error; !errors.Is(err, nil) {
-		return http.StatusUnprocessableEntity, nil, errors.New("cannot create shift due to invalid value while saving db")
+	// Save the shift to the database
+	if err := ss.db.Create(&shift).Error; err != nil {
+		return http.StatusInternalServerError, nil, errors.New("failed to create shift")
 	}
-
-	return http.StatusOK, entity, nil
+	// Return the created shift as the response
+	return http.StatusOK, shift, nil
 }

@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Shift struct {
-	ID        int64     `json:"id" gorm:"primary_key"`
+	ID        int64     `json:"id" gorm:"primary_key;autoIncrement"`
 	ShiftID   string    `json:"shift_id" gorm:"not null"`
 	UserID    int64     `json:"user_id" gorm:"default:null"`
 	StartTime time.Time `json:"start_time" gorm:"not null"`
