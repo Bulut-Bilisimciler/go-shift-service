@@ -27,7 +27,7 @@ import (
 func (ss *ShiftService) HandleGetShiftPeriod(c *gin.Context) (int, interface{}, error) {
 
 	// get shift period
-	var shiftPeriod []models.UserShiftPeriod
+	var shiftPeriod []models.ShiftPeriod
 	if err := ss.db.Find(&shiftPeriod).Error; err != nil {
 		if err == sql.ErrNoRows {
 			return http.StatusNotFound, nil, err
