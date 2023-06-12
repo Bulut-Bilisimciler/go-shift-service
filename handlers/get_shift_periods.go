@@ -24,7 +24,7 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /demands [get]
-func (ss *ShiftService) HandleGetShiftPeriods(c *gin.Context) (int, interface{}, error) {
+func (ss *ShiftService) HandleGetShiftPeriod(c *gin.Context) (int, interface{}, error) {
 
 	// get shifts
 	var shift_periods []models.ShiftPeriod
