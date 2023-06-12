@@ -161,4 +161,9 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 
 	})
 
+	v1.GET("/shift-periods", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetShiftPeriod(ctx)
+		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
+	})
+
 }
