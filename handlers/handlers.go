@@ -125,4 +125,15 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		code, data, err := ss.HandleGetShiftById(ctx)
 		respondJson(ctx, code, API_PREFIX+"/shifts/:id", data, err)
 	})
+
+	v1.GET("/shift-periods", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetShiftPeriod(ctx)
+		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
+	})
+
+	v1.GET("/demands", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetDemand(ctx)
+		respondJson(ctx, code, API_PREFIX+"/demands", data, err)
+	})
+
 }

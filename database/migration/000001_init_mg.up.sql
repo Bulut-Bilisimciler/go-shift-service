@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id INT PRIMARY KEY,
+  id INT IDENTITY(1,1) PRIMARY KEY,
   name VARCHAR(64) NOT NULL,
   surname VARCHAR(64) NOT NULL,
   email VARCHAR(255) DEFAULT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE users (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE shifts (
-  id INT PRIMARY KEY,
+  id INT IDENTITY(1,1)  PRIMARY KEY, 
   shift_id VARCHAR(16) NOT NULL,
   user_id INT DEFAULT NULL,
   start_time TIMESTAMPTZ NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE shifts (
   made_field VARCHAR(255) DEFAULT NULL
 );
 CREATE TABLE shift_periods (
-  id INT PRIMARY KEY,
+  id INT IDENTITY(1,1)  PRIMARY KEY,
   shift_periods_id VARCHAR(16) NOT NULL,
   start_time TIMESTAMPTZ NOT NULL,
   end_time TIMESTAMPTZ NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE shift_periods (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE demands (
-  id INT PRIMARY KEY,
+  id INT IDENTITY(1,1)  PRIMARY KEY,
   demand_id VARCHAR(64) NOT NULL,
   user_id VARCHAR(64) NOT NULL,
   old_shift_id VARCHAR(64) NOT NULL,
