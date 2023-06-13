@@ -166,4 +166,14 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
 	})
 
+	v1.DELETE("/shift-periods/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleDeleteShiftPeriod(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/shift-periods/:id", data, err)
+	})
+
+	v1.DELETE("/demands/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleDeleteDemands(ctx)
+		respondJson(ctx, code, RN_PREFIX+"/demands", data, err)
+	})
+
 }
