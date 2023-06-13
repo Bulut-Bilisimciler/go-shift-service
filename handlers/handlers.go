@@ -115,6 +115,12 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, API_PREFIX+"/demands/:id", data, err)
 	})
 
+	// update demands
+	v1.PUT("/demands/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleUpdateDemand(ctx)
+		respondJson(ctx, code, API_PREFIX+"/demands", data, err)
+	})
+
 	// SHIFTS
 
 	// Create a new shift
@@ -174,6 +180,12 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 	v1.DELETE("/demands/:id", func(ctx *gin.Context) {
 		code, data, err := ss.HandleDeleteDemands(ctx)
 		respondJson(ctx, code, RN_PREFIX+"/demands", data, err)
+	})
+
+	// update demands
+	v1.PUT("/shift-periods/:id", func(ctx *gin.Context) {
+		code, data, err := ss.HandleUpdateShiftPeriod(ctx)
+		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
 	})
 
 }

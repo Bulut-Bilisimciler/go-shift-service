@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/Bulut-Bilisimciler/go-shift-service/models"
@@ -9,36 +10,39 @@ import (
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleUpdateDemand godoc
+// @Summary update demand by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description update demand by dto
+// @Tags demand
 // @Accept json
 // @Produce json
 // @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
+// @Success 200 {object} handlers.RespondJson "update demand by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
+// @Failure 422 {object} handlers.RespondJson "demand not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
+// @Router /demand/:id [update]
 func (ss *ShiftService) HandleUpdateDemand(c *gin.Context) (int, interface{}, error) {
 
-	// get demand id
+	// update demand id
 	demandID := c.Param("id")
 
-	// get dto from req.body
+	fmt.Println("log1")
+	// update dto from req.body
 	var dto models.Demand
 	if err := c.ShouldBindJSON(&dto); err != nil {
+		fmt.Println(err)
+		fmt.Println("log1")
 		return http.StatusBadRequest, nil, errors.New("invalid demand dto")
 	}
 
-	// get demand from db
+	// update demand from db
 	var demand models.Demand
 
 	// check demand exists
-	if err := ss.db.Where("id = ?", demandID).First(&demand).Error; err != nil {
+	if err := ss.db.Where("demand_id = ?", demandID).First(&demand).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return http.StatusUnprocessableEntity, nil, errors.New("demand not found")
 		}
