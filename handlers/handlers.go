@@ -182,10 +182,10 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, RN_PREFIX+"/demands", data, err)
 	})
 
-	// update demands
+	// update shift periods
 	v1.PUT("/shift-periods/:id", func(ctx *gin.Context) {
 		code, data, err := ss.HandleUpdateShiftPeriod(ctx)
-		respondJson(ctx, code, API_PREFIX+"/shift-periods", data, err)
+		respondJson(ctx, code, API_PREFIX+"/shift-periods/:id", data, err)
 	})
 
 }
