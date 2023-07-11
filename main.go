@@ -9,15 +9,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	docs "github.com/Bulut-Bilisimciler/go-shift-service/docs"
+	docs "buluttan/shift-service/docs"
+
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	// import local packages /logger
-	"github.com/Bulut-Bilisimciler/go-shift-service/logger"
+	"buluttan/shift-service/logger"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/config"
-	"github.com/Bulut-Bilisimciler/go-shift-service/handlers"
+	"buluttan/shift-service/config"
+	"buluttan/shift-service/handlers"
 )
 
 // Path: ShiftService

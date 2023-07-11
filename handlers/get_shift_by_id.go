@@ -4,25 +4,26 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleGetShiftById handles the get shift by id request
+// @Summary get shift by id
 // @Schemes
-// @Description get shifts by dto
+// @Description get shift by id
 // @Tags shifts
 // @Accept json
 // @Produce json
-// @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
-// @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /users [get]
+// @Success 200 {object} RespondJson "get shift by id success"
+// @Failure 400 {object} RespondJson "invalid get shift by id dto"
+// @Failure 422 {object} RespondJson "cannot get shift by id due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /shifts/{id} [get]
+
 func (ss *ShiftService) HandleGetShiftById(c *gin.Context) (int, interface{}, error) {
 
 	// Get shift id from req.params

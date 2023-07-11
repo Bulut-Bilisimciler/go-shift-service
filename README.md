@@ -21,7 +21,7 @@ cd your-workspace
 git clone https://github.com/Bulut-Bilisimciler/go-shift-service.git
 
 # Move to the project root directory
-cd go-shift-service
+cd shift-service
 ```
 
 ### Run without Docker
@@ -72,7 +72,8 @@ It is important to note that the project structure described here may not includ
 ## Major Packages used in this project
 
 - **gin**: Gin is an HTTP web framework written in Go (Golang). It features a Martini-like API with much better performance -- up to 40 times faster. If you need a smashing performance, get yourself some Gin.
-- **mongo go driver**: The Official Golang driver for MongoDB.
+- **gorm**: Object Relational Mapping (ORM) library for Golang. ORM converts data between incompatible type systems using object-oriented programming languages.
+- **postgreSQL go driver**: The Official Golang driver for PostgreSQL.
 - **jwt**: JSON Web Tokens are an open, industry-standard RFC 7519 method for representing claims securely between two parties. Used for Access Token and Refresh Token.
 - **viper**: For loading configuration from the `.env` file. Go configuration with fangs. Find, load, and unmarshal a configuration file in JSON, TOML, YAML, HCL, INI, envfile, or Java properties formats.
 - **bcrypt**: Package bcrypt implements Provos and Mazières's bcrypt adaptive hashing algorithm.

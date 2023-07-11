@@ -4,25 +4,26 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleDeleteUser handles the delete user request
+// @Summary delete user by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description delete user by dto
+// @Tags users
 // @Accept json
 // @Produce json
-// @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
-// @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
+// @Success 200 {object} RespondJson "delete user success"
+// @Failure 400 {object} RespondJson "invalid delete user dto"
+// @Failure 422 {object} RespondJson "cannot delete user due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /users [delete]
+
 func (ss *ShiftService) HandleDeleteUser(c *gin.Context) (int, interface{}, error) {
 
 	// get user id

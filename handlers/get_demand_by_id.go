@@ -4,31 +4,32 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleGetDemandById handles the get demand by id request
+// @Summary get demand by id
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description get demand by id
+// @Tags demands
 // @Accept json
 // @Produce json
-// @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
-// @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
+// @Success 200 {object} RespondJson "get demand by id success"
+// @Failure 400 {object} RespondJson "invalid get demand by id dto"
+// @Failure 422 {object} RespondJson "cannot get demand by id due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /demands/{id} [get]
+
 func (ss *ShiftService) HandleGetDemandById(c *gin.Context) (int, interface{}, error) {
 
 	// Get shift id from req.params
 	demandId := c.Param("id")
 
-	// get user
+	// get demand
 	var demand models.Demand
 	if err := ss.db.Where("demand_id = ?", demandId).First(&demand).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

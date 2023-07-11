@@ -5,12 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
-// HandleGetShifts godoc
+// HandleGetShift godoc
 // @Summary get shifts by dto
 // @Schemes
 // @Description get shifts by dto
@@ -24,8 +25,8 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts [get]
-func (ss *ShiftService) HandleGetShift(c *gin.Context) (int, interface{}, error) {
 
+func (ss *ShiftService) HandleGetShift(c *gin.Context) (int, interface{}, error) {
 	// get shifts
 	var shifts []models.Shift
 	if err := ss.db.Find(&shifts).Error; err != nil {

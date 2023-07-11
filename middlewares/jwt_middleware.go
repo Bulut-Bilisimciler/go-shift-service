@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/config"
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/config"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )

@@ -73,9 +73,15 @@ func (ss *ShiftService) InitRouter(r *gin.Engine) {
 		respondJson(ctx, code, RN_PREFIX+"/users", data, err)
 	})
 
-	// Get all users
+	// Get users with pagination
 	v1.GET("/users", func(ctx *gin.Context) {
-		code, data, err := ss.HandleGetUsers(ctx)
+		code, data, err := ss.HandleGetUsersWithPagination(ctx)
+		respondJson(ctx, code, API_PREFIX+"/users", data, err)
+	})
+
+	// Get all users
+	v1.GET("/users/all", func(ctx *gin.Context) {
+		code, data, err := ss.HandleGetAllUsers(ctx)
 		respondJson(ctx, code, API_PREFIX+"/users", data, err)
 	})
 

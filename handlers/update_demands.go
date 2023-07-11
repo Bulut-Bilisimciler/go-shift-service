@@ -5,25 +5,27 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 // HandleUpdateDemand godoc
-// @Summary update demand by dto
+// @Summary update demands by dto
 // @Schemes
-// @Description update demand by dto
-// @Tags demand
+// @Description update demands by dto
+// @Tags demands
 // @Accept json
 // @Produce json
 // @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "update demand by success"
+// @Success 200 {object} handlers.RespondJson "update demands by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "demand not found"
+// @Failure 422 {object} handlers.RespondJson "demands not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /demand/:id [update]
+// @Router /demands/:id [update]
+
 func (ss *ShiftService) HandleUpdateDemand(c *gin.Context) (int, interface{}, error) {
 
 	// update demand id

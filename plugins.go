@@ -8,7 +8,8 @@ import (
 	"time"
 
 	// cache
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/go-redis/redis/v8"
 
 	// postgres
