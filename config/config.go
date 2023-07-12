@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/logger"
+	"buluttan/shift-service/logger"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/viper"
@@ -15,25 +15,25 @@ type config struct {
 		Env     string `mapstructure:"env"`
 		Port    string `mapstructure:"port"`
 		Version string `mapstructure:"version"`
-	}
+	} `mapstructure:"app"`
 
 	Auth struct {
 		JwtPub string `mapstructure:"jwt_pub"`
-	}
+	} `mapstructure:"auth"`
 
 	DB struct {
 		Url string `mapstructure:"url"`
-	}
+	} `mapstructure:"db"`
 
 	Cache struct {
 		Url string `mapstructure:"url"`
-	}
+	} `mapstructure:"cache"`
 
 	Broker struct {
 		Url           string `mapstructure:"url"`
 		ConsumerGroup string `mapstructure:"consumer_group"`
 		Topic         string `mapstructure:"topic"`
-	}
+	} `mapstructure:"broker"`
 
 	Cdn struct {
 		Endpoint  string `mapstructure:"endpoint"`
@@ -41,7 +41,7 @@ type config struct {
 		Bucket    string `mapstructure:"bucket"`
 		AccessKey string `mapstructure:"access_key"`
 		SecretKey string `mapstructure:"secret_key"`
-	}
+	} `mapstructure:"cdn"`
 }
 
 var C config
@@ -54,7 +54,7 @@ func ReadConfig(processCwdir string) {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		logger.ERROR.Println(err)
+		logger.ERROR.Println("Cannot read config file:", err)
 	}
 
 	if err := viper.Unmarshal(&Config); err != nil {

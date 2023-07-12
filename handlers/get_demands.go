@@ -5,25 +5,27 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleGetDemand godoc
+// @Summary get demands by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description get demands by dto
+// @Tags demands
 // @Accept json
 // @Produce json
 // @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
+// @Success 200 {object} handlers.RespondJson "get demands by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
+// @Failure 422 {object} handlers.RespondJson "demands not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
+// @Router /demands [get]
+
 func (ss *ShiftService) HandleGetDemand(c *gin.Context) (int, interface{}, error) {
 
 	// get demands

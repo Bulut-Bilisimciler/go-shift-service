@@ -1,50 +1,39 @@
 package handlers
 
 import (
+	"buluttan/shift-service/models"
 	"errors"
 	"net/http"
-	"time"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
 	"github.com/gin-gonic/gin"
 )
 
-type createDemandDto struct {
-	DemandID  int64     `json:"demand_id" gorm:"not null"`
-	ShiftID   string    `json:"shift_id" gorm:"not null"`
-	UserID    int64     `json:"user_id" gorm:"default:null"`
-	StartTime time.Time `json:"start_time" gorm:"not null"`
-	EndTime   time.Time `json:"end_time" gorm:"not null"`
-}
-
-// HandleCreateShift godoc
-// @Summary create shift by dto
+// HandleCreateDemand handles the create demand request
+// @Summary create demand by dto
 // @Schemes
-// @Description create shift by dto
-// @Tags shifts
+// @Description create demand by dto
+// @Tags demands
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "create shift success"
-// @Failure 400 {object} handlers.RespondJson "invalid create shift dto"
-// @Failure 422 {object} handlers.RespondJson "cannot create shift due to db error"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [post]
+// @Success 200 {object} RespondJson "create demand success"
+// @Failure 400 {object} RespondJson "invalid create demand dto"
+// @Failure 422 {object} RespondJson "cannot create demand due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /demands [post]
 
 func (ss *ShiftService) HandleCreateDemand(c *gin.Context) (int, interface{}, error) {
 	// Parse the request body to get the demand data
 	var demand models.Demand
 	if err := c.ShouldBindJSON(&demand); err != nil {
-
-		return http.StatusBadRequest, nil, errors.New("invalid shift data")
+		return http.StatusBadRequest, nil, errors.New("invalid demand data")
 	}
-
-	// Perform any validation or preprocessing of the shift data if needed
 
 	// Save the demand to the database
 	if err := ss.db.Create(&demand).Error; err != nil {
-		return http.StatusInternalServerError, nil, errors.New("failed to create shift")
+		return http.StatusInternalServerError, nil, errors.New("failed to create demand")
 	}
+
 	// Return the created demand as the response
 	return http.StatusOK, demand, nil
 }

@@ -4,31 +4,30 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleDeleteShiftPeriod handles the delete shift_period request
+// @Summary delete shift_period by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description delete shift_period by dto
+// @Tags shift_periods
 // @Accept json
 // @Produce json
-// @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
-// @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
-func (ss *ShiftService) HandleDeleteShiftPeriod(c *gin.Context) (int, interface{}, error) {
+// @Success 200 {object} RespondJson "delete shift_period success"
+// @Failure 400 {object} RespondJson "invalid delete shift_period dto"
+// @Failure 422 {object} RespondJson "cannot delete shift_period due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /shift_periods [delete]
 
-	// pagination from req.query
+func (ss *ShiftService) HandleDeleteShiftPeriod(c *gin.Context) (int, interface{}, error) {
 	shiftPeriodId := c.Param("id")
 
-	// delete shift
+	// delete shift_period
 	var shiftPeriod models.ShiftPeriod
 	if err := ss.db.Where("shift_period_id = ?", shiftPeriodId).Delete(&shiftPeriod).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

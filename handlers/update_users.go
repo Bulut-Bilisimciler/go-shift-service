@@ -4,7 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -20,13 +21,14 @@ import (
 // @Security BearerAuth
 // @Success 200 {object} handlers.RespondJson "update users by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "user not found"
+// @Failure 422 {object} handlers.RespondJson "users not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /users/:id [put]
+// @Router /users/:id [update]
+
 func (ss *ShiftService) HandleUpdateUser(c *gin.Context) (int, interface{}, error) {
 
 	// get user id
-	userID := c.Param("id")
+	employeeID := c.Param("id")
 
 	// get dto from req.body
 	var dto models.User
@@ -38,7 +40,7 @@ func (ss *ShiftService) HandleUpdateUser(c *gin.Context) (int, interface{}, erro
 	var user models.User
 
 	// check user exists
-	if err := ss.db.Where("user_id = ?", userID).First(&user).Error; err != nil {
+	if err := ss.db.Where("employee_id = ?", employeeID).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return http.StatusUnprocessableEntity, nil, errors.New("user not found")
 		}

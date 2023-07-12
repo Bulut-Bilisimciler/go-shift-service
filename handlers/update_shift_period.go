@@ -5,25 +5,27 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 // HandleUpdateShiftPeriod godoc
-// @Summary update shift_period by dto
+// @Summary update shift_periods by dto
 // @Schemes
-// @Description update shift_period by dto
-// @Tags shift_period
+// @Description update shift_periods by dto
+// @Tags shift_periods
 // @Accept json
 // @Produce json
 // @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "update shift_period by success"
+// @Success 200 {object} handlers.RespondJson "update shift_periods by success"
 // @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shift_period not found"
+// @Failure 422 {object} handlers.RespondJson "shift_periods not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shift_period/:id [update]
+// @Router /shift_periods/:id [update]
+
 func (ss *ShiftService) HandleUpdateShiftPeriod(c *gin.Context) (int, interface{}, error) {
 
 	// update shift_period id

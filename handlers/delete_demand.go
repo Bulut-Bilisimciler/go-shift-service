@@ -4,31 +4,30 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-// HandleGetShifts godoc
-// @Summary get shifts by dto
+// HandleDeleteDemand handles the delete demand request
+// @Summary delete demand by dto
 // @Schemes
-// @Description get shifts by dto
-// @Tags shifts
+// @Description delete demand by dto
+// @Tags demands
 // @Accept json
 // @Produce json
-// @Param pagination query models.Pagination true "pagination"
 // @Security BearerAuth
-// @Success 200 {object} handlers.RespondJson "get shifts by success"
-// @Failure 400 {object} handlers.RespondJson "invalid pagination query"
-// @Failure 422 {object} handlers.RespondJson "shifts not found"
-// @Failure 500 {object} handlers.RespondJson "internal server error"
-// @Router /shifts [get]
-func (ss *ShiftService) HandleDeleteDemands(c *gin.Context) (int, interface{}, error) {
+// @Success 200 {object} RespondJson "delete demand success"
+// @Failure 400 {object} RespondJson "invalid delete demand dto"
+// @Failure 422 {object} RespondJson "cannot delete demand due to db error"
+// @Failure 500 {object} RespondJson "internal server error"
+// @Router /demands [delete]
 
-	// pagination from req.query
+func (ss *ShiftService) HandleDeleteDemands(c *gin.Context) (int, interface{}, error) {
 	demandId := c.Param("id")
 
-	// delete shift
+	// delete demand
 	var demand models.Demand
 	if err := ss.db.Where("demand_id = ?", demandId).Delete(&demand).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Bulut-Bilisimciler/go-shift-service/models"
+	"buluttan/shift-service/models"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -24,8 +25,8 @@ import (
 // @Failure 422 {object} handlers.RespondJson "shifts not found"
 // @Failure 500 {object} handlers.RespondJson "internal server error"
 // @Router /shifts/:id [update]
-func (ss *ShiftService) HandleUpdateShift(c *gin.Context) (int, interface{}, error) {
 
+func (ss *ShiftService) HandleUpdateShift(c *gin.Context) (int, interface{}, error) {
 	// update shift id
 	shiftID := c.Param("id")
 
