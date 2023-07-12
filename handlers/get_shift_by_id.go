@@ -29,7 +29,7 @@ func (ss *ShiftService) HandleGetShiftById(c *gin.Context) (int, interface{}, er
 	// Get shift id from req.params
 	shiftId := c.Param("id")
 
-	// get user
+	// get shift
 	var shift models.Shift
 	if err := ss.db.Where("shift_id = ?", shiftId).First(&shift).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

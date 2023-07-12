@@ -27,12 +27,12 @@ import (
 func (ss *ShiftService) HandleDeleteUser(c *gin.Context) (int, interface{}, error) {
 
 	// get user id
-	userID := c.Param("id")
+	employeeID := c.Param("id")
 
 	// get user from db
 	var user models.User
 	// delete user
-	if err := ss.db.Where("id = ?", userID).Delete(&user).Error; err != nil {
+	if err := ss.db.Where("id = ?", employeeID).Delete(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return http.StatusNotFound, nil, errors.New("user not found")
 		}

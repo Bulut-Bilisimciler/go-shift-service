@@ -27,7 +27,7 @@ import (
 func (ss *ShiftService) HandleDeleteShiftPeriod(c *gin.Context) (int, interface{}, error) {
 	shiftPeriodId := c.Param("id")
 
-	// delete shift
+	// delete shift_period
 	var shiftPeriod models.ShiftPeriod
 	if err := ss.db.Where("shift_period_id = ?", shiftPeriodId).Delete(&shiftPeriod).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

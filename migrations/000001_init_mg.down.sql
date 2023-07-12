@@ -2,4 +2,3 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS shifts;
 DROP TABLE IF EXISTS shift_periods;
 DROP TABLE IF EXISTS demands;
-```

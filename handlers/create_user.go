@@ -1,10 +1,9 @@
 package handlers
 
 import (
+	"buluttan/shift-service/models"
 	"errors"
 	"net/http"
-
-	"buluttan/shift-service/models"
 
 	"github.com/gin-gonic/gin"
 )

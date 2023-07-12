@@ -28,11 +28,11 @@ import (
 func (ss *ShiftService) HandleGetUserById(c *gin.Context) (int, interface{}, error) {
 
 	// Get user id from req.params
-	userId := c.Param("id")
+	employeeID := c.Param("id")
 
 	// get user
 	var user models.User
-	if err := ss.db.Where("user_id = ?", userId).First(&user).Error; !errors.Is(err, nil) {
+	if err := ss.db.Where("employee_id = ?", employeeID).First(&user).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return http.StatusNotFound, nil, errors.New("user not found")
 		} else {

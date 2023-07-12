@@ -26,10 +26,10 @@ import (
 
 func (ss *ShiftService) HandleGetShiftPeriodByID(c *gin.Context) (int, interface{}, error) {
 
-	// Get shift id from req.params
+	// Get shift_period id from req.params
 	shift_periodId := c.Param("id")
 
-	// get user
+	// get shift_period
 	var shift_period models.ShiftPeriod
 	if err := ss.db.Where("shift_period_id = ?", shift_periodId).First(&shift_period).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

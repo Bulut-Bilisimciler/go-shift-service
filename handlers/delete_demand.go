@@ -27,7 +27,7 @@ import (
 func (ss *ShiftService) HandleDeleteDemands(c *gin.Context) (int, interface{}, error) {
 	demandId := c.Param("id")
 
-	// delete shift
+	// delete demand
 	var demand models.Demand
 	if err := ss.db.Where("demand_id = ?", demandId).Delete(&demand).Error; !errors.Is(err, nil) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {

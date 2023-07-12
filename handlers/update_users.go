@@ -28,7 +28,7 @@ import (
 func (ss *ShiftService) HandleUpdateUser(c *gin.Context) (int, interface{}, error) {
 
 	// get user id
-	userID := c.Param("id")
+	employeeID := c.Param("id")
 
 	// get dto from req.body
 	var dto models.User
@@ -40,7 +40,7 @@ func (ss *ShiftService) HandleUpdateUser(c *gin.Context) (int, interface{}, erro
 	var user models.User
 
 	// check user exists
-	if err := ss.db.Where("user_id = ?", userID).First(&user).Error; err != nil {
+	if err := ss.db.Where("employee_id = ?", employeeID).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return http.StatusUnprocessableEntity, nil, errors.New("user not found")
 		}
